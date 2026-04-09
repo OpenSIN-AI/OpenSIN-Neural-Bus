@@ -1,0 +1,19 @@
+{
+  "name": "@opensin/neural-bus",
+  "version": "1.0.0",
+  "description": "SDK for connecting OpenSIN agents to the NATS-based Neural-Bus.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "peerDependencies": {
+    "nats": "^2.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "author": "OpenSIN-AI Collective",
+  "license": "UNLICENSED"
+}

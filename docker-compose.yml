@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  # The Core Nervous System
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222" # Client port
+      - "8222:8222" # Web dashboard
+    command: ["-js"] # Enable JetStream for persistent event-sourcing
+    volumes:
+      - ./data/nats:/data
+    restart: always
+    environment:
+      - NATS_AUTH_TOKEN=${NATS_AUTH_TOKEN:-secret_token_change_me}
+
+  # The Ouroboros Working Memory
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server --save 60 1 --loglevel warning --requirepass ${REDIS_PASSWORD:-secret_token_change_me}
+    restart: always
+
+  # Vector Memory (The DNA Ledger)
+  pgvector:
+    image: ankane/pgvector:v0.5.1
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: opensin
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-secret_token_change_me}
+      POSTGRES_DB: ouroboros_dna
+    volumes:
+      - ./data/pgvector:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  nats-data:
+  redis-data:
+  pgvector-data:
