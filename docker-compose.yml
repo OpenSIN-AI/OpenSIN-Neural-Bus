@@ -18,7 +18,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379" # Remapped: 6379 taken by room-04-redis-cache on OCI
     volumes:
       - ./data/redis:/data
     command: redis-server --save 60 1 --loglevel warning --requirepass ${REDIS_PASSWORD:-secret_token_change_me}
@@ -28,7 +28,7 @@ services:
   pgvector:
     image: ankane/pgvector:v0.5.1
     ports:
-      - "5432:5432"
+      - "5435:5432"
     environment:
       POSTGRES_USER: opensin
       POSTGRES_PASSWORD: ${PG_PASSWORD:-secret_token_change_me}
