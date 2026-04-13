@@ -1,0 +1,12 @@
+{
+  "projectId": "OpenSIN-Neural-Bus",
+  "goalId": "jetstream-message-bus",
+  "goalDescription": "Complete NATS JetStream message bus for OpenSIN agent communication",
+  "plan": "v1.0 — 8/8 steps completed, fully merged to main",
+  "knowledge": {
+    "rules": ["Images MUST be opened in macOS Preview.app (PRIORITY -4.5)", "Auto-sync after every chat turn (PRIORITY -4.0)"],
+    "solutions": ["TypeScript + Python SDK with durable consumers", "Ouroboros bridge for brain updates", "MCP server for agent interaction"],
+    "forbidden": ["Direct API calls without event envelopes", "Hardcoded NATS URLs"],
+    "mistakes": ["PR #9 merge via API failed due to connection — resolved via local merge"]
+  }
+}
