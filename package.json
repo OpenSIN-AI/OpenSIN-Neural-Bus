@@ -1,18 +1,28 @@
 {
   "name": "@opensin/neural-bus",
   "version": "1.0.0",
-  "description": "SDK for connecting OpenSIN agents to the NATS-based Neural-Bus.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "OpenSIN Neural Bus SDK and OpenCode MCP server.",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "bin": {
+    "opensin-neural-bus-mcp": "dist/src/mcp-server.js"
   },
-  "peerDependencies": {
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test:node": "node --test dist/tests/*.test.js tests/node/*.test.cjs tests/jetstream-runtime.test.js",
+    "test:py": "python3 -m unittest discover -s tests -p 'test_*.py'",
+    "test": "npm run build && npm run test:node && npm run test:py"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "nats": "^2.19.0"
   },
   "devDependencies": {
+    "@types/node": "^22.10.0",
     "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "author": "OpenSIN-AI Collective",
   "license": "UNLICENSED"

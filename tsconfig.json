@@ -2,12 +2,24 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "CommonJS",
+    "lib": ["ES2022"],
+    "types": ["node"],
     "declaration": true,
     "outDir": "./dist",
+    "rootDir": ".",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/index.ts",
+    "src/neural-bus.ts",
+    "src/types.ts",
+    "src/validation.ts",
+    "src/recent-event-store.ts",
+    "src/ouroboros-python-bridge.ts",
+    "src/mcp-server.ts",
+    "tests/**/*"
+  ]
 }

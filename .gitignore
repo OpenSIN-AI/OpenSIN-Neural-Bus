@@ -1,0 +1,15 @@
+# Local Serena project state should never become part of repo history.
+.serena/
+
+# Python cache artifacts are runtime noise, not source files.
+__pycache__/
+*.pyc
+
+# Node dependencies are installed locally and should not be committed.
+node_modules/
+
+# Build artifacts are recreated by the test/build pipeline.
+dist/
+
+# Debug artifacts are generated at runtime by the OpenCode hook.
+.opencode/debug/

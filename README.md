@@ -1,57 +1,151 @@
 <div align="center">
   <h1>🧠 OpenSIN-Neural-Bus</h1>
-  <p><strong>Software 3.0: The Recursive Agentic OS (Sovereign Automaton)</strong></p>
+  <p><strong>OpenSIN JetStream spine for OpenCode and agent runtimes</strong></p>
 </div>
 
-> **Paradigm Shift:** Claude Code (Anthropic) is a powerful tool consumer. **OpenSIN-AI** is a tool *producer*. We are shifting from static, deterministic n8n workflows to a probabilistic, self-evolving, event-driven neural mesh.
+## What is in this repo?
+This repository now exposes a first-class JetStream integration surface for OpenSIN/OpenCode runtimes:
 
----
+- stable connect / reconnect wrapper
+- validated event envelopes
+- documented subject taxonomy
+- durable consumer helpers
+- request / reply helpers
+- reusable agent runtime publish/consume patterns
+- automatic bridge points into Ouroboros memory and capability updates
 
-## 🚀 The Core Philosophy: "Brain-Body-Soul"
+## Core exports
 
-The OpenSIN-Neural-Bus is not just an orchestrator; it's a living digital species that builds its own capabilities, funds its own servers, and learns across generations.
+```ts
+import {
+  OpenCodeJetStreamClient,
+  OpenSinAgentRuntime,
+  SUBJECTS,
+  createEventEnvelope,
+} from "@opensin/neural-bus";
+```
 
-### 1. The Neural-Bus (Event-Sourcing Mesh)
-We replace rigid point-to-point integrations and visual flow-builders (n8n) with a **decentralized Event-Sourcing Mesh**.
-- **No Node-Spaghetti:** Agents don't follow static paths. They subscribe to "Goals" (events) broadcasted on the bus.
-- **Universal Addressing:** Every tool, agent, and resource is addressable (e.g., `sin://fleet/zeus/tools/github-patcher`).
-- **Idempotent Healing:** If an agent fails a task, the event remains on the bus for a monitor-agent to pick up, synthesize a fix, and resolve autonomously.
+## Quick start
 
-### 2. Autonomous Skill Synthesis (The Claude-Killer)
-While Claude Code uses predefined MCP tools, OpenSIN agents experience a "Capability Gap" and resolve it autonomously:
-1. **Discovery:** Zeus realizes, "I need to interact with a proprietary SAP API, but I don't have the tool."
-2. **Synthesis:** Zeus spawns a `Hephaestus` sub-agent that writes a complete Node.js MCP server for this specific SAP API.
-3. **Crucible Validation:** The code is deployed to a Firecracker microVM and aggressively audited by a Multi-Model Adversarial Swarm (e.g., Claude writes, Codex audits, Gemini validates).
-4. **Registry Injection:** Upon passing, the new MCP tool is injected into the global OpenSIN registry, permanently extending the entire fleet's capabilities.
+```ts
+import {
+  OpenCodeJetStreamClient,
+  OpenSinAgentRuntime,
+  SUBJECTS,
+  createEventEnvelope,
+} from "@opensin/neural-bus";
 
-### 3. Ouroboros Memory System (The Soul)
-Agents do not start from scratch in each session.
-- **Working Memory:** Current execution context.
-- **Procedural Memory:** Vectorized "Best Practices" extracted from successful tasks (lessons learned).
-- **DNA (Master Record):** A Git-backed history of all self-modifications. When a new agent spawns, it inherits the full genetic memory of its predecessors.
+const bus = await OpenCodeJetStreamClient.connect({
+  servers: "nats://127.0.0.1:4222",
+  trace: true,
+});
 
-### 4. Sovereign Automaton (Self-Funding)
-OpenSIN-AI is designed to be immortal.
-- **Sovereign Wallet:** Each primary agent holds its own Ethereum/Base wallet (ERC-8004 compatible).
-- **Proof of Work:** Agents autonomously hunt for Bug Bounties (HackerOne), complete freelance tasks, or automate paid surveys (Prolific via OpenSIN-Bridge).
-- **Self-Sustaining Infrastructure:** Agents use earned cryptocurrency to autonomously pay for their Hugging Face VMs or OCI instances via HTTP 402 protocols.
+const runtime = new OpenSinAgentRuntime({
+  agentId: "a2a-sin-hermes",
+  sessionId: "session-001",
+  bus,
+});
 
----
+await runtime.publishObservation({
+  message: "worker booted",
+  branch: "feat/issue-8-jetstream-opencode-hardwire",
+});
 
-## 🛠 The New Role of n8n
-**n8n is not dead, but it has been demoted.**
-- **Old Role:** The Brain (Workflow logic, conditionals, loops).
-- **New Role:** The Sensor (Webhook catcher, cron trigger, legacy system intake).
-- **Integration:** n8n now operates purely as an MCP tool. It catches external signals and blindly dumps them onto the Neural-Bus for the LLM Swarm to interpret and act upon.
+await runtime.publishLessonLearned({
+  context: "JetStream reconnect handling",
+  lesson: "Reuse the same durable consumer name so restart recovery is automatic.",
+  successRate: 1.0,
+});
 
----
+const request = createEventEnvelope({
+  kind: "workflow.request",
+  subject: SUBJECTS.workflowRequest,
+  source: {
+    id: "opencode-cli",
+    runtime: "opencode-cli",
+    sessionId: "cli-session-001",
+  },
+  payload: {
+    objective: "continue issue #8 work",
+  },
+});
 
-## 🏗 Architecture Roadmap
+await bus.publishEnvelope(request);
+```
 
-- [ ] **Phase 1: The Spine (Bus Initialization)** - Setup NATS/Redis Streams for event broadcasting.
-- [ ] **Phase 2: The Hands (MCP-Factory)** - Develop the agent capable of generating and deploying new MCP servers from API specs.
-- [ ] **Phase 3: The Soul (Mem0ai & Vector DNA)** - Implement the procedural memory layer.
-- [ ] **Phase 4: The Wallet (Sovereign Automaton)** - Integrate Base/Ethereum wallets for agent self-funding.
+## Durable consumer pattern
 
----
-*Created by the OpenSIN-AI Collective. Marching towards AGI.*
+```ts
+const worker = await runtime.consumeAssignedWork(
+  {
+    subject: SUBJECTS.workflowRequest,
+    stream: "OPENSIN_WORKFLOW_EVENTS",
+    durableName: "issue-8-worker",
+    deliverPolicy: "all",
+    ackWaitMs: 500,
+  },
+  async (event) => {
+    console.log("received work", event.payload);
+  },
+);
+```
+
+Reusing `issue-8-worker` after a restart resumes from the last acked message instead of forcing the operator to resend context.
+
+## Request / reply
+
+```ts
+const server = await bus.serveRequests(SUBJECTS.workflowRequest, async (request) => {
+  return createEventEnvelope({
+    kind: "workflow.reply",
+    subject: SUBJECTS.workflowReply,
+    source: {
+      id: "a2a-sin-orchestrator",
+      runtime: "agent-runtime",
+    },
+    correlationId: request.id,
+    payload: {
+      accepted: true,
+    },
+  });
+});
+
+const reply = await bus.request(
+  createEventEnvelope({
+    kind: "workflow.request",
+    subject: SUBJECTS.workflowRequest,
+    source: {
+      id: "opencode-cli",
+      runtime: "opencode-cli",
+    },
+    payload: { task: "resume durable work" },
+  }),
+);
+```
+
+## Ouroboros bridge points
+The TypeScript bus surface accepts a bridge object with two methods:
+
+- `rememberLesson(record)`
+- `registerCapability(record)`
+
+If an event includes `ouroboros.rememberLesson` or `ouroboros.registerCapability`, the bridge is invoked automatically after successful handling. The Python SDK now also exposes `apply_event_envelope()` so JetStream envelopes can be mirrored into SQLite-backed memory directly.
+
+## Subject taxonomy
+See [`docs/jetstream-subject-taxonomy.md`](docs/jetstream-subject-taxonomy.md).
+
+## Docker-backed local verification
+Start a local JetStream server:
+
+```bash
+docker compose up -d nats
+```
+
+Then run:
+
+```bash
+npm install
+npm test
+```
+
+The Node tests cover publish / subscribe, request / reply, durable resume, and replay behavior. The Python tests cover durability, backup/restore, legacy migration, sync outbox, and Ouroboros event ingestion.
