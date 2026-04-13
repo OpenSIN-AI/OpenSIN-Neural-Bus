@@ -1,0 +1,20 @@
+{
+  "global": {
+    "rules": [
+      {"id": "rule-preview-mandatory", "text": "Images MUST be opened in macOS Preview.app — never tell users to check /tmp", "priority": -4.5},
+      {"id": "rule-sin-brain-auto-sync", "text": "Auto-sync after every chat turn via sync-chat-turn hook", "priority": -4.0}
+    ]
+  },
+  "project": {
+    "facts": [
+      {"id": "fact-neural-bus-core", "text": "Neural-Bus provides OpenCodeJetStreamClient, OpenSinAgentRuntime, SUBJECTS, createEventEnvelope for agent messaging via NATS JetStream", "discoveredAt": "2026-04-13"}
+    ],
+    "decisions": [
+      {"id": "dec-jetstream-complete", "text": "Full JetStream implementation merged to main including TypeScript SDK, Python SDK, MCP server, Ouroboros bridge, tests, and docs", "rationale": "Complete event-driven communication layer for all A2A agents", "createdAt": "2026-04-13"}
+    ],
+    "solutions": [
+      {"id": "sol-neural-bus-sdk", "text": "TypeScript + Python SDK with durable consumer patterns, request/reply, and event envelopes", "createdAt": "2026-04-13"},
+      {"id": "sol-ouroboros-bridge", "text": "Ouroboros bridge with rememberLesson() and registerCapability() for automatic brain updates", "createdAt": "2026-04-13"}
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "planId": "neural-bus-v1.0",
+  "projectId": "OpenSIN-Neural-Bus",
+  "goalId": "jetstream-message-bus",
+  "goalDescription": "Complete NATS JetStream message bus for OpenSIN agent communication",
+  "version": 1,
+  "createdAt": "2026-04-13T16:00:00Z",
+  "steps": [
+    {"id": "step-1", "title": "TypeScript SDK (OpenCodeJetStreamClient, OpenSinAgentRuntime)", "status": "completed"},
+    {"id": "step-2", "title": "Python SDK (Ouroboros memory, CLI, opencode_context)", "status": "completed"},
+    {"id": "step-3", "title": "Event envelope validation and subject taxonomy", "status": "completed"},
+    {"id": "step-4", "title": "Ouroboros bridge (rememberLesson, registerCapability)", "status": "completed"},
+    {"id": "step-5", "title": "MCP server for agent interaction", "status": "completed"},
+    {"id": "step-6", "title": "Test suite (Node + Python)", "status": "completed"},
+    {"id": "step-7", "title": "Documentation (README, taxonomy, config docs)", "status": "completed"},
+    {"id": "step-8", "title": "PR merged to main", "status": "completed"}
+  ]
+}
