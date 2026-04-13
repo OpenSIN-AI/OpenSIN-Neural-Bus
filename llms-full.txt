@@ -1,0 +1,41 @@
+# OpenSIN Neural Bus - Full Context
+
+## Overview
+The event-driven nervous system connecting all OpenSIN agents — durable, replayable, and Ouroboros-aware. Provides a first-class JetStream integration surface for OpenSIN/OpenCode runtimes.
+
+## What It Does
+- **JetStream Integration:** Stable connect/reconnect wrapper with validated event envelopes
+- **Durable Consumers:** Resume from last acked message after restart — no context loss
+- **Request/Reply:** Synchronous request-response pattern over NATS subjects
+- **Event Envelopes:** Standardized envelope with correlation IDs and source tracking
+- **Ouroboros Bridge:** Auto-bridge to memory (rememberLesson) and capability (registerCapability)
+- **Python SDK:** SQLite-backed memory with apply_event_envelope()
+- **Agent Runtime:** Reusable publish/consume patterns for A2A agents
+
+## Architecture
+- **Transport:** NATS JetStream (nats://92.5.60.87:4222 production)
+- **Core:** OpenCodeJetStreamClient, OpenSinAgentRuntime, SUBJECTS, createEventEnvelope
+- **Memory:** SQLite-backed Ouroboros memory with lesson/capability storage
+- **Language:** TypeScript (primary) + Python SDK
+
+## Quick Start
+```bash
+docker compose up -d nats
+npm install
+npm test
+```
+
+## Key Commands
+- `docker compose up -d nats` — Start local NATS JetStream
+- `npm install` — Install dependencies
+- `npm test` — Run all tests (pub/sub, request/reply, durable resume, replay)
+
+## Configuration
+Connect to NATS: `nats://127.0.0.1:4222` (local) or `nats://92.5.60.87:4222` (production)
+
+## Links
+- GitHub: https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus
+- npm: https://www.npmjs.com/package/@opensin/neural-bus
+- Documentation: https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/docs/
+- Issues: https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/issues
+- License: https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/LICENSE

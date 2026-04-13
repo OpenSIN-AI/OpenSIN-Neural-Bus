@@ -1,0 +1,17 @@
+# OpenSIN Neural Bus
+
+> The event-driven nervous system connecting all OpenSIN agents — durable, replayable, and Ouroboros-aware.
+
+## Documentation
+- [README](https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/README.md) - Quick start, features, architecture
+- [Subject Taxonomy](https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/docs/jetstream-subject-taxonomy.md) - Complete NATS subject hierarchy
+- [Architecture](https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/ARCHITECTURE.md) - System architecture deep dive
+- [Contributing](https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus/blob/main/CONTRIBUTING.md) - How to contribute
+
+## Key Information
+- License: MIT
+- Language: TypeScript, Python
+- Protocol: NATS JetStream
+- Package: @opensin/neural-bus (npm)
+- Repo: https://github.com/OpenSIN-AI/OpenSIN-Neural-Bus
+- Production NATS: nats://92.5.60.87:4222
