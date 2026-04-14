@@ -1,22 +1,13 @@
-# Project Rules
-## 🚨 ABSOLUTES CI/CD VERBOT — KEINE GITHUB ACTIONS (PRIORITY -10.0 — HÖCHSTE REGEL, KEINE AUSNAHMEN) 🚨
-- [2026-04-14T17:00:00Z] DYNAMIC AGENT DISCOVERY PFLICHT! VOR jeder Aufgabe: `node /Users/jeremy/dev/global-brain/src/engines/discover-agents.js` ausfuehren. Registry unter .pcpm/agent-registry.json lesen. byTrigger/byCapability Indexe nutzen. NIEMALS statische Listen! NEUE Agenten werden AUTOMATISCH erkannt. (priority: -9.0)
-- [2026-04-14T16:30:00Z] A2A-SIN AGENT ROUTING PFLICHT! Jeder Agent MUSS bei jeder Aufgabe sofort prüfen: Welcher A2A-SIN-Agent ist dafür zuständig? Delegation MUSS automatisch erfolgen — User muss es NICHT extra sagen! Google Docs → A2A-SIN-Google-Apps, Passwörter → A2A-SIN-PasswordManager, Code → Team-SIN-Code-*, etc. (priority: -9.0)
+# PCPM RULES — OpenSIN Agent
 
-**KEINE GITHUB ACTIONS FÜR CI/CD, DEPLOYMENT ODER AUTOMATION!**
+## 🚨 ABSOLUTES CI/CD VERBOT (PRIORITY -10.0)
 
-- OpenSIN-AI nutzt **AUSSCHLIESSLICH A2A-SIN-GitHub-Action + n8n** für alle CI/CD, Deployment, Build, Test und Automation Tasks.
-- GitHub Actions Workflows (`.github/workflows/*.yml`) sind **PERMANENT VERBOTEN**.
-- Der n8n-Router auf der OCI VM (`92.5.60.87:5678`) ist unser zentrales Automation-Backend.
-- A2A-SIN-GitHub-Action ist unser GitHub Event Listener und n8n Bridge.
-- Wer GitHub Actions erstellt oder vorschlägt: **Protokollverstoß**.
+**KEINE GITHUB ACTIONS!** Wir nutzen AUSSCHLIESSLICH A2A-SIN-GitHub-Action + n8n.
 
+## 🚨 DYNAMIC AGENT DISCOVERY (PRIORITY -9.0)
 
-## Global Rules (synced from AGENTS.md)
-- [2026-04-13T14:00:00Z] Images MUST be opened in macOS Preview.app — never tell users to check /tmp (priority: -4.5)
-- [2026-04-13T14:00:00Z] Auto-sync after every chat turn via sync-chat-turn hook (priority: -4.0)
+Vor jeder Aufgabe: `node /Users/jeremy/dev/global-brain/src/engines/discover-agents.js` ausführen und verfügbare Agenten scannen. Automatische Delegation an spezialisierte A2A-SIN-Agenten.
 
-## Project-Specific Rules
-- All event envelopes must pass validation before publishing to JetStream
-- Subjects must follow the canonical taxonomy in docs/jetstream-subject-taxonomy.md
-- MCP servers must be registered in global opencode.json before use
+## 🚨 BOX STORAGE MANDATE (PRIORITY 00)
+
+Alle Logs, Screenshots, Videos → Box.com via A2A-SIN-Box-Storage.
