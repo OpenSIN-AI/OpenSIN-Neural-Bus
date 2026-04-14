@@ -285,3 +285,29 @@ MIT. See [LICENSE](LICENSE) for details.
 </p>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+---
+
+## Agent Configuration System (v5)
+
+This project is part of the OpenSIN-AI agent ecosystem and uses the unified agent configuration system:
+
+| Datei | Zweck |
+|:---|:---|
+| `oh-my-sin.json` | Zentrales Team Register |
+| `oh-my-openagent.json` | Subagenten-Modelle |
+| `my-sin-team-infra.json` | Team Infrastructure Modelle |
+
+### Subagenten-Modelle
+
+| Subagent | Modell |
+|:---|:---|
+| **explore** | `nvidia-nim/stepfun-ai/step-3.5-flash` |
+| **librarian** | `nvidia-nim/stepfun-ai/step-3.5-flash` |
+
+### PARALLEL-EXPLORATION MANDATE
+
+Bei Codebase-Analyse auf grossen Projekten MUESSEN Agenten **5-10 parallele explore + 5-10 librarian-Agenten** starten.
+
+→ [Full Documentation](https://github.com/OpenSIN-AI/OpenSIN-documentation/blob/main/docs/guide/agent-configuration.md)
