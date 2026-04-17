@@ -17,8 +17,8 @@ queries use the Python Ouroboros registry through a JSON CLI bridge.
 ## Build the server
 
 ```bash
-npm install
-npm run build
+bun install
+bun run build
 ```
 
 ## Required environment

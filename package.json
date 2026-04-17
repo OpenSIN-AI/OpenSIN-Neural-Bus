@@ -11,7 +11,7 @@
     "build": "tsc -p tsconfig.json",
     "test:node": "node --test dist/tests/*.test.js tests/node/*.test.cjs tests/jetstream-runtime.test.js",
     "test:py": "python3 -m unittest discover -s tests -p 'test_*.py'",
-    "test": "npm run build && npm run test:node && npm run test:py"
+    "test": "bun run build && bun run test:node && bun run test:py"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",

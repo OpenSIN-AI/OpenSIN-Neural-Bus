@@ -21,14 +21,14 @@ The event-driven nervous system connecting all OpenSIN agents — durable, repla
 ## Quick Start
 ```bash
 docker compose up -d nats
-npm install
-npm test
+bun install
+bun test
 ```
 
 ## Key Commands
 - `docker compose up -d nats` — Start local NATS JetStream
-- `npm install` — Install dependencies
-- `npm test` — Run all tests (pub/sub, request/reply, durable resume, replay)
+- `bun install` — Install dependencies
+- `bun test` — Run all tests (pub/sub, request/reply, durable resume, replay)
 
 ## Configuration
 Connect to NATS: `nats://127.0.0.1:4222` (local) or `nats://92.5.60.87:4222` (production)
