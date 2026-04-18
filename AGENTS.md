@@ -19,3 +19,10 @@ bun start
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+## Boundary Guidance for Agents
+
+When modifying this repo:
+
+- Prefer event bus, durable delivery, and envelope contract work.
+- Keep claims scoped to the bus layer.
+- Do not redefine control-plane, memory, docs, or runtime canon from here.
