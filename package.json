@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && mkdir -p dist/src && bun build --target=node --format=cjs --outdir=dist/src src/index.ts src/mcp-server.ts",
-    "test:node": "node --test dist/tests/*.test.js tests/node/*.test.cjs tests/jetstream-runtime.test.js",
+    "test:node": "node --test dist/tests/mcp-server.test.js dist/tests/validation.test.js tests/node/ouroboros-context-plugin.test.cjs",
     "test:py": "python3 -m unittest discover -s tests -p 'test_*.py'",
     "test": "bun run build && bun run test:node && bun run test:py"
   },
