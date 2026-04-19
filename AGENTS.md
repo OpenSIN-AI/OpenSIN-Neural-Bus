@@ -12,10 +12,17 @@ This repository is part of the OpenSIN-AI ecosystem.
 ```bash
 git clone https://github.com/OpenSIN-AI/$(basename "$PWD")
 cd $(basename "$PWD")
-npm install
-npm start
+bun install
+bun start
 ```
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
+## Boundary Guidance for Agents
+
+When modifying this repo:
+
+- Prefer event bus, durable delivery, and envelope contract work.
+- Keep claims scoped to the bus layer.
+- Do not redefine control-plane, memory, docs, or runtime canon from here.

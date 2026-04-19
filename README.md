@@ -49,19 +49,19 @@
 </td>
 <td width="33%" align="center">
 <strong>2. Install</strong><br/><br/>
-<code>npm install</code><br/><br/>
+<code>bun install</code><br/><br/>
 <img src="https://img.shields.io/badge/30s-Blue?style=flat" />
 </td>
 <td width="33%" align="center">
 <strong>3. Test</strong><br/><br/>
-<code>npm test</code><br/><br/>
+<code>bun test</code><br/><br/>
 <img src="https://img.shields.io/badge/Go!-Green?style=flat" />
 </td>
 </tr>
 </table>
 
 > [!TIP]
-> Full setup: `npm install && docker compose up -d nats && npm test` — all tests cover pub/sub, request/reply, durable resume, and replay.
+> Full setup: `bun install && docker compose up -d nats && bun test` — all tests cover pub/sub, request/reply, durable resume, and replay.
 
 ---
 
@@ -227,15 +227,66 @@ The Python SDK exposes `apply_event_envelope()` for mirroring JetStream envelope
 ---
 
 ## Deploy
-
 | Methode | Target | Zweck |
 |:---|:---|:---|
 | **Local** | `docker compose up -d nats` | Development with embedded NATS |
 | **OCI VM** | `92.5.60.87:4222` | Production NATS JetStream server |
 | **Package** | `@opensin/neural-bus` (npm) | Shared library for all agents |
+| **Box Storage** | `room-09-box-storage:3000` | Artifact/log storage via A2A-SIN-Box-Storage |
 
 > [!WARNING]
 > The production NATS server runs on the OCI VM. All agents must connect to `nats://92.5.60.87:4222` in production.
+
+---
+
+## Cloud Storage (A2A-SIN-Box-Storage)
+
+Neural-Bus agents can persist artifacts (logs, crash dumps, reports, recordings) to **Box.com** via the fleet-wide `A2A-SIN-Box-Storage` service.
+
+### Box Storage Access
+
+| Property | Value |
+|:---|:---|
+| **Service** | `http://room-09-box-storage:3000` |
+| **Static IP** | `172.20.0.109:3000` |
+| **Upload** | `POST /api/v1/upload` |
+| **Validate** | `POST /api/v1/validate` |
+| **Auth** | `X-Box-Storage-Key: $BOX_STORAGE_API_KEY` |
+
+### Usage Example
+
+```bash
+# Upload a log file to Box.com /Cache folder
+curl -X POST "http://room-09-box-storage:3000/api/v1/upload" \
+  -H "X-Box-Storage-Key: $BOX_STORAGE_API_KEY" \
+  -F "file=@/tmp/jetstream-crash.log"
+
+# Preflight validation
+curl -X POST "http://room-09-box-storage:3000/api/v1/validate" \
+  -H "Content-Type: application/json" \
+  -d '{"filename":"crash.dump","size":5242880}'
+```
+
+### Python Integration
+
+```python
+import requests, os
+
+BOX_URL = os.getenv("BOX_STORAGE_URL", "http://room-09-box-storage:3000")
+BOX_KEY = os.getenv("BOX_STORAGE_API_KEY")
+
+def upload_artifact(file_path: str, filename: str = None) -> dict:
+    """Upload artifact to Box.com via A2A-SIN-Box-Storage"""
+    filename = filename or os.path.basename(file_path)
+    with open(file_path, "rb") as f:
+        return requests.post(
+            f"{BOX_URL}/api/v1/upload",
+            headers={"X-Box-Storage-Key": BOX_KEY},
+            files={"file": (filename, f)}
+        ).json()
+```
+
+> **Note:** Box Storage replaces the deprecated GitLab Storage (`room-07-gitlab-storage`). See [Box Cloud Storage Docs](https://github.com/OpenSIN-AI/OpenSIN-documentation/blob/main/docs/storage/box-cloud-storage.md) for full migration guide.
 
 ---
 
@@ -267,8 +318,8 @@ The Python SDK exposes `apply_event_envelope()` for mirroring JetStream envelope
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Start NATS: `docker compose up -d nats`
-4. Install: `npm install`
-5. Run tests: `npm test`
+4. Install: `bun install`
+5. Run tests: `bun test`
 6. Commit and push
 7. Open a Pull Request
 

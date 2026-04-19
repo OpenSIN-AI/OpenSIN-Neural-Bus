@@ -90,7 +90,7 @@ That JSON artifact is the canonical place to inspect why the integration behaved
 Run both the Python and Node tests:
 
 ```bash
-npm test
+bun test
 ```
 
 Coverage split:
