@@ -362,3 +362,4 @@ This project is part of the OpenSIN-AI agent ecosystem and uses the unified agen
 Bei Codebase-Analyse auf grossen Projekten MUESSEN Agenten **5-10 parallele explore + 5-10 librarian-Agenten** starten.
 
 → [Full Documentation](https://github.com/OpenSIN-AI/OpenSIN-documentation/blob/main/docs/guide/agent-configuration.md)
+RecursiveMAS integration - see plan: https://github.com/OpenSIN-AI/OpenSIN-overview/blob/main/docs/03_ops/recursive-mas-integration.md
